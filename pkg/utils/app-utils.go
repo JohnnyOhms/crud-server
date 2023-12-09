@@ -24,11 +24,11 @@ func Decoding(data []byte, i interface{}) error {
 	return err
 }
 
-func ParseData(r *http.Request, i interface{}) error {
+func ParseBody(r *http.Request, i interface{}) error {
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		return err
 	}
-	Err := Decoding(body, i)
-	return Err
+	err = Decoding(body, i)
+	return err
 }

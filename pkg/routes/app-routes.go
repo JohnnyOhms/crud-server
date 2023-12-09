@@ -6,9 +6,10 @@ import (
 )
 
 func Router(routes *mux.Router) {
-	routes.HandleFunc("/getdata", controller.GetData).Methods("GET")
-	routes.HandleFunc("/getsingledata/{id}", controller.GetSingleData).Methods("GET")
-	routes.HandleFunc("/editdata/{id}", controller.EditData).Methods("PUT")
-	routes.HandleFunc("/deletesingledata/{id}", controller.DeleteSingleData).Methods("DELETE")
-	routes.HandleFunc("/deletedata", controller.DeleteData).Methods("DELETE")
+	routes.HandleFunc("/createinfo", controller.CreateInfo).Methods("POST")
+	routes.HandleFunc("/getinfo", controller.GetData).Methods("GET")
+	routes.HandleFunc("/getsingleinfo/{id}", controller.GetSingleData).Methods("GET")
+	routes.HandleFunc("/editinfo/{id}", controller.EditData).Methods("PUT")
+	routes.HandleFunc("/deletesingleinfo/{id}", controller.DeleteSingleData).Methods("DELETE")
+	routes.HandleFunc("/deleteinfo", controller.DeleteData).Methods("DELETE")
 }

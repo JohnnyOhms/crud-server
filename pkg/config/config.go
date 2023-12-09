@@ -1,4 +1,4 @@
-package Config
+package config
 
 import (
 	"context"
@@ -9,7 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var collection *mongo.Collection
+var Collection *mongo.Collection
 var ctx = context.TODO()
 
 func ConnectDB() (*mongo.Collection, error) {
@@ -25,12 +25,12 @@ func ConnectDB() (*mongo.Collection, error) {
 	}
 
 	database := client.Database("UserInfo")
-	collection := database.Collection("info")
+	Collection := database.Collection("info")
 
 	err = database.CreateCollection(ctx, "info")
 	if err != nil {
 		fmt.Println("Database already existed")
 	}
 
-	return collection, nil
+	return Collection, nil
 }
