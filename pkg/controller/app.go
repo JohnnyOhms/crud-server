@@ -64,49 +64,75 @@ func CreateInfo(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetInfo(w http.ResponseWriter, r *http.Request) {
-	var userId string
-	if userId == "" || len(userId) == 0 {
+	params := mux.Vars(r)
+	userId := params["userid"]
+	if params["userid"] == "" || len(userId) == 0 {
 		http.Error(w, "authenticate to continue ", http.StatusUnauthorized)
 		return
 	}
-	w.Header().Set("Content-Type:", "aplicaton/json")
 
-	res, err := model.GetInfo(userId, config.Collection)
+	collection, err := config.ConnectDB()
+	if err != nil {
+		http.Error(w, "failed to establish database connection", http.StatusInternalServerError)
+		fmt.Println("Error connecting to database:", err)
+		return
+	}
+	defer collection.Database().Client().Disconnect(context.Background())
+
+	result, err := model.GetInfo(userId, config.Collection)
 	if err != nil {
 		http.Error(w, "failed to get data from database", http.StatusBadRequest)
 		fmt.Println("Error in getting data from db", err)
 		return
 	}
+
 	data := Result{
 		Success: true,
 		Mssg:    "info gotten successfully",
-		Data:    res,
+		Data:    result,
 	}
 
-	result, err := utils.Encoding(data)
+	response, err := utils.Encoding(data)
 	if err != nil {
 		http.Error(w, "failed to encode data", http.StatusInternalServerError)
 		fmt.Println("Error in encoding data", err)
 		return
 	}
 
+	w.Header().Set("Content-Type:", "aplicaton/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write(result)
+	w.Write(response)
 }
 
 func GetSingleInfo(w http.ResponseWriter, r *http.Request) {
-	var userId string
-	if userId == "" || len(userId) == 0 {
+	params := mux.Vars(r)
+	userId := params["userid"]
+	if params["userid"] == "" || len(userId) == 0 {
 		http.Error(w, "authenticate to continue ", http.StatusUnauthorized)
 		return
 	}
-	params := mux.Vars(r)
+
 	if params["id"] == "" {
 		http.Error(w, "id param cannot be null", http.StatusBadRequest)
 		fmt.Println("null id param provided")
 		return
 	}
 	Id := params["id"]
+
+	collection, err := config.ConnectDB()
+	if err != nil {
+		http.Error(w, "failed to establish database connection", http.StatusInternalServerError)
+		fmt.Println("Error connecting to database:", err)
+		return
+	}
+	defer collection.Database().Client().Disconnect(context.Background())
+
+	if err != nil {
+		http.Error(w, "failed to convert to int", http.StatusInternalServerError)
+		fmt.Println("int conversion failed", err)
+		return
+	}
+
 	res, err := model.GetSingleInfo(userId, Id, config.Collection)
 
 	if err != nil {
@@ -132,31 +158,45 @@ func GetSingleInfo(w http.ResponseWriter, r *http.Request) {
 }
 
 func EditInfo(w http.ResponseWriter, r *http.Request) {
-	var userId string
-	if userId == "" || len(userId) == 0 {
+	params := mux.Vars(r)
+	if params["userid"] == "" || len(params["userid"]) == 0 {
 		http.Error(w, "authenticate to continue ", http.StatusUnauthorized)
 		return
 	}
 
-	params := mux.Vars(r)
 	if params["id"] == "" {
 		http.Error(w, "id param cannot be null", http.StatusBadRequest)
 		fmt.Println("null id param provided")
 		return
 	}
+	userId := params["userid"]
 	Id := params["id"]
 
 	if r.Body == nil || r.ContentLength == 0 {
 		http.Error(w, "Empty request body", http.StatusBadRequest)
 		return
 	}
-	var update interface{}
+	var updated interface{}
 
-	updated := utils.ParseBody(r, &update)
+	err := utils.ParseBody(r, &updated)
+	if err != nil {
+		http.Error(w, "failed to parse body", http.StatusInternalServerError)
+		fmt.Println("prase body failed", err)
+		return
+	}
+
+	collection, err := config.ConnectDB()
+	if err != nil {
+		http.Error(w, "failed to establish database connection", http.StatusInternalServerError)
+		fmt.Println("Error connecting to database:", err)
+		return
+	}
+	defer collection.Database().Client().Disconnect(context.Background())
 
 	result, err := model.EditInfo(userId, Id, updated, config.Collection)
 	if err != nil {
 		http.Error(w, "failed to update data from the data base", http.StatusBadRequest)
+		fmt.Println("failed to update", err)
 		return
 	}
 
@@ -179,19 +219,27 @@ func EditInfo(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteSingleInfo(w http.ResponseWriter, r *http.Request) {
-	var userId string
-	if userId == "" || len(userId) == 0 {
+	params := mux.Vars(r)
+	userId := params["userid"]
+	if params["userid"] == "" || len(userId) == 0 {
 		http.Error(w, "authenticate to continue ", http.StatusUnauthorized)
 		return
 	}
 
-	params := mux.Vars(r)
 	if params["id"] == "" {
 		http.Error(w, "id param cannot be null", http.StatusBadRequest)
 		fmt.Println("null id param provided")
 		return
 	}
 	Id := params["id"]
+
+	collection, err := config.ConnectDB()
+	if err != nil {
+		http.Error(w, "failed to establish database connection", http.StatusInternalServerError)
+		fmt.Println("Error connecting to database:", err)
+		return
+	}
+	defer collection.Database().Client().Disconnect(context.Background())
 
 	result, err := model.DeleteSingleInfo(userId, Id, config.Collection)
 	if err != nil {
@@ -219,11 +267,21 @@ func DeleteSingleInfo(w http.ResponseWriter, r *http.Request) {
 }
 
 func DeleteInfo(w http.ResponseWriter, r *http.Request) {
-	var userId string
-	if userId == "" || len(userId) == 0 {
+	params := mux.Vars(r)
+	userId := params["userid"]
+	if params["userid"] == "" || len(userId) == 0 {
 		http.Error(w, "authenticate to continue ", http.StatusUnauthorized)
 		return
 	}
+
+	collection, err := config.ConnectDB()
+	if err != nil {
+		http.Error(w, "failed to establish database connection", http.StatusInternalServerError)
+		fmt.Println("Error connecting to database:", err)
+		return
+	}
+	defer collection.Database().Client().Disconnect(context.Background())
+
 	res, err := model.DeleteInfo(userId, config.Collection)
 	if err != nil {
 		http.Error(w, "failed to delete info", http.StatusInternalServerError)
