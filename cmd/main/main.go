@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/JohnnyOhms/crud-server/pkg/Doc"
 	Config "github.com/JohnnyOhms/crud-server/pkg/config"
 	"github.com/JohnnyOhms/crud-server/pkg/routes"
 	"github.com/gorilla/mux"
@@ -13,11 +14,7 @@ import (
 func main() {
 	r := mux.NewRouter()
 	routes.Router(r)
-	r.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type:", "application/json")
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprintf(w, "<h1 style='color:red'>DOCUMENTATION</h1>")
-	})
+	r.HandleFunc("/", Doc.Documentation).Methods("GET")
 
 	if _, err := Config.ConnectDB(); err != nil {
 		log.Fatal(err)
