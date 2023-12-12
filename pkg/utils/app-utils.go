@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"math/rand"
 	"net/http"
+	"time"
 )
 
 func Encoding(data interface{}) ([]byte, error) {
-
 	json, err := json.Marshal(data)
 	if err != nil {
 		fmt.Println("Error in marshling to json", err)
@@ -31,4 +32,15 @@ func ParseBody(r *http.Request, i interface{}) error {
 	}
 	err = Decoding(body, i)
 	return err
+}
+
+func GenerateUserId() string {
+	const charaset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*^()_+-"
+	rand.Seed(time.Now().UnixNano())
+
+	b := make([]byte, 30)
+	for i := range b {
+		b[i] = charaset[rand.Intn(len(charaset))]
+	}
+	return string(b)
 }

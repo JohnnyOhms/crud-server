@@ -2,7 +2,6 @@ package config
 
 import (
 	"context"
-	"fmt"
 	"log"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -10,6 +9,7 @@ import (
 )
 
 var Collection *mongo.Collection
+var AuthCollection *mongo.Collection
 var ctx = context.TODO()
 
 func ConnectDB() (*mongo.Collection, error) {
@@ -24,13 +24,22 @@ func ConnectDB() (*mongo.Collection, error) {
 		log.Fatal(err)
 	}
 
-	database := client.Database("UserInfo")
-	Collection := database.Collection("info")
+	Collection = client.Database("UserInfo").Collection("info")
+	return Collection, nil
+}
 
-	err = database.CreateCollection(ctx, "info")
+func ConnectAuth() (*mongo.Collection, error) {
+	clientOptions := options.Client().ApplyURI("mongodb+srv://officialjohn662:JohnnyOhms@cluster0.khdqojb.mongodb.net/")
+	client, err := mongo.Connect(ctx, clientOptions)
 	if err != nil {
-		fmt.Println("Database already existed")
+		log.Fatal(err)
 	}
 
-	return Collection, nil
+	err = client.Ping(ctx, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	AuthCollection = client.Database("UserInfo").Collection("user")
+	return AuthCollection, nil
 }

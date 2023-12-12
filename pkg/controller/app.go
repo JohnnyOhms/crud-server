@@ -99,7 +99,7 @@ func GetInfo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type:", "aplicaton/json")
+	w.Header().Set("Content-Type:", "applicaton/json")
 	w.WriteHeader(http.StatusOK)
 	w.Write(response)
 }
@@ -212,7 +212,7 @@ func EditInfo(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("encoding data failed")
 		return
 	}
-	w.Header().Set("Content-Type:", "aplicaton/json")
+	w.Header().Set("Content-Type:", "applicaton/json")
 	w.WriteHeader(http.StatusCreated)
 	w.Write(res)
 
@@ -260,7 +260,7 @@ func DeleteSingleInfo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type:", "aplicaton/json")
+	w.Header().Set("Content-Type:", "applicaton/json")
 	w.WriteHeader(http.StatusAccepted)
 	w.Write(res)
 
@@ -301,7 +301,7 @@ func DeleteInfo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Type:", "aplicaton/json")
+	w.Header().Set("Content-Type:", "applicaton/json")
 	w.WriteHeader(http.StatusCreated)
 	w.Write(result)
 }

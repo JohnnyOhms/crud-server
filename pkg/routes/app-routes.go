@@ -12,4 +12,7 @@ func Router(routes *mux.Router) {
 	routes.HandleFunc("/editinfo/{userid}/{id}", controller.EditInfo).Methods("PUT")
 	routes.HandleFunc("/deletesingleinfo/{userid}/{id}", controller.DeleteSingleInfo).Methods("DELETE")
 	routes.HandleFunc("/deleteinfo/{userid}", controller.DeleteInfo).Methods("DELETE")
+	// auth routes
+	routes.HandleFunc("/signup", controller.SignUp).Methods("POST")
+	routes.HandleFunc("/signin", controller.Signin).Methods("POST")
 }
