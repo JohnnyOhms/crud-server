@@ -32,7 +32,7 @@ func Documentation(w http.ResponseWriter, r *http.Request) {
     <p>For the following API endpoints, observe the guidelines and specifications provided for seamless operation:</p>
 
     <h3>---> Signup (POST Request)</h3>
-    <p>URL: <a href="http://localhost:8080/signup/">http://localhost:8080/signup/</a></p>
+    <p>URL: <a href="#">https://crud-api-s9wj.onrender.com/signup/</a></p>
     <p>Return a data structure along with your secret userId.</p>
        <p>Structure to send in the request body:</p>
     <pre>
@@ -45,7 +45,7 @@ func Documentation(w http.ResponseWriter, r *http.Request) {
 <p>convert your password to string</p>
 
     <h3>---> Signin (POST Request)</h3>
-    <p>URL: <a href="http://localhost:8080/signin/">http://localhost:8080/signin/</a></p>
+    <p>URL: <a href="#">https://crud-api-s9wj.onrender.com/signin/</a></p>
     <p>Return a data structure along with your secret userId.</p>
     <p>Structure to send in the request body:</p>
     <pre>
@@ -59,7 +59,7 @@ func Documentation(w http.ResponseWriter, r *http.Request) {
     <p><strong>Note:</strong> Upon authenticating a user, retrieve the userId. Store it locally and include it in every subsequent request. Avoid displaying the userId on the dashboard as it serves as your secret key for all requests.</p>
 
     <h3>---> Create Info (POST Request)</h3>
-    <p>URL: <a href="http://localhost:8080/createinfo/">http://localhost:8080/createinfo/</a></p>
+    <p>URL: <a href="#">https://crud-api-s9wj.onrender.com/createinfo/</a></p>
     <p>Structure to send in the request body:</p>
     <pre>{
     "UserId": "string",
@@ -71,15 +71,15 @@ func Documentation(w http.ResponseWriter, r *http.Request) {
 }</pre>
 
     <h3>---> Get All Info (GET Request)</h3>
-    <p>URL: <a href="http://localhost:8080/getinfo/{userId}/">http://localhost:8080/getinfo/{userId}/</a></p>
+    <p>URL: <a href="#">https://crud-api-s9wj.onrender.com/getinfo/{userId}/</a></p>
     <p>Send the userId as a parameter in the GET Request.</p>
 
     <h3>---> Get Single Info (GET Request)</h3>
-    <p>URL: <a href="http://localhost:8080/getsingleinfo/{userId}/{id}/">http://localhost:8080/getsingleinfo/{userId}/{id}/</a></p>
+    <p>URL: <a href="#">https://crud-api-s9wj.onrender.com/getsingleinfo/{userId}/{id}/</a></p>
     <p>Send the userId and the info's ID as parameters in the GET Request.</p>
 
     <h3>---> Update Info (PUT Request)</h3>
-    <p>URL: <a href="http://localhost:8080/editinfo/{userId}/{id}/">http://localhost:8080/editinfo/{userId}/{id}/</a></p>
+    <p>URL: <a href="#">https://crud-api-s9wj.onrender.com/editinfo/{userId}/{id}/</a></p>
     <p>Send the userId and the info's ID as parameters in the PUT Request.</p>
     <p>Structure to send in the request body:</p>
     <pre>{
@@ -87,11 +87,11 @@ func Documentation(w http.ResponseWriter, r *http.Request) {
 }</pre>
 
     <h3>---> Delete Single Info (DELETE Request)</h3>
-    <p>URL: <a href="http://localhost:8080/deletesingleinfo/{userId}/{id}/">http://localhost:8080/deletesingleinfo/{userId}/{id}/</a></p>
+    <p>URL: <a href="#">https://crud-api-s9wj.onrender.com/deletesingleinfo/{userId}/{id}/</a></p>
     <p>Send the userId and the info's ID as parameters in the DELETE Request.</p>
 
     <h3>---> Delete All Info (DELETE Request)</h3>
-    <p>URL: <a href="http://localhost:8080/deleteinfo/{userId}/">http://localhost:8080/deleteinfo/{userId}/</a></p>
+    <p>URL: <a href="#">https://crud-api-s9wj.onrender.com/deleteinfo/{userId}/</a></p>
     <p>Send the userId as a parameter in the DELETE Request.</p>
 </body>`
 
