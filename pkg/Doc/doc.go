@@ -6,7 +6,6 @@ import (
 )
 
 func Documentation(w http.ResponseWriter, r *http.Request) {
-
 	doc := `
 <style>
         body {
@@ -65,7 +64,7 @@ func Documentation(w http.ResponseWriter, r *http.Request) {
     "UserId": "string",
     "Name": "string",
     "Email": "string",
-    "Number": int,
+    "Phone": int,
     "Address": "string",
     "DateCreated": "string" (Ensure your new date format is converted to string format)
 }</pre>

@@ -273,7 +273,6 @@ func DeleteInfo(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "authenticate to continue ", http.StatusUnauthorized)
 		return
 	}
-
 	collection, err := config.ConnectDB()
 	if err != nil {
 		http.Error(w, "failed to establish database connection", http.StatusInternalServerError)

@@ -32,6 +32,7 @@ func main() {
 	if _, err := Config.ConnectDB(); err != nil {
 		log.Fatal(err)
 	}
+
 	fmt.Printf("Server listening on port %s...\n", port)
 	if err := http.ListenAndServe(":"+port, corsRouter); err != nil {
 		log.Fatal(err)

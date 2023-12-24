@@ -35,7 +35,7 @@ func ParseBody(r *http.Request, i interface{}) error {
 }
 
 func GenerateUserId() string {
-	const charaset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*^()_+-"
+	const charaset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	rand.Seed(time.Now().UnixNano())
 
 	b := make([]byte, 30)
